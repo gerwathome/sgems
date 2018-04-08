@@ -1,0 +1,10 @@
+#!/bin/sh
+PREFIX=/usr/local/src/
+GSTLAPPLIHOME=${PREFIX}sgems/
+export GSTLAPPLIHOME
+SGBIN=${GSTLAPPLIHOME}bin/linux/
+SGLIB=${GSTLAPPLIHOME}lib/linux/
+PILIB=${GSTLAPPLIHOME}plugins/designer/
+PATH=$PATH:$SGBIN
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SGLIB:$PILIB
+${SGEMS_BIN}sgems &>/dev/null &

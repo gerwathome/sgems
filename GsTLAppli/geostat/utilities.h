@@ -375,6 +375,22 @@ namespace geostat_utils {
   }
 
 
+//This function transform the informed nodes from the source
+// cdf to the target cdf	
+
+template<class Cdf1, class Cdf2>
+void cdf_transform( GsTLGridProperty* prop, Cdf1 cdf_source, Cdf2 cdf_target )
+{
+	for( int node_id=0; node_id< prop->size(); node_id++ )
+	{
+		if( prop->is_informed( node_id ) ) {
+			double p = cdf_source.prob(prop->get_value( node_id));
+			prop->set_value(cdf_target.inverse(p), node_id );
+		}
+	}
+}
+
+
   /** Creates a new property called \c new_prop_name in geostat_grid \c grid 
   * containing the cdf transform of property \c original_prop. \c original_prop
   * must either be a property of \c grid or have the same size as properties of
@@ -408,22 +424,6 @@ namespace geostat_utils {
 
     return transf_prop;
   }
-
-//This function transform the informed nodes from the source
-// cdf to the target cdf	
-
-template<class Cdf1, class Cdf2>
-void cdf_transform( GsTLGridProperty* prop, Cdf1 cdf_source, Cdf2 cdf_target )
-{
-	for( int node_id=0; node_id< prop->size(); node_id++ )
-	{
-		if( prop->is_informed( node_id ) ) {
-			double p = cdf_source.prob(prop->get_value( node_id));
-			prop->set_value(cdf_target.inverse(p), node_id );
-		}
-	}
-}
-
 
   /** Checks that triplet \c (major,medium,minor) defines a valid ellispoid ranges,
   *  i.e.: major >= medium >= minor > 0
